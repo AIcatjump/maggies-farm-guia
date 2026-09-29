@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>Maggie's Farm — Guia do Projeto</title>
-<meta name="description" content="Guia da cabana ecoeficiente de Maggie's Farm — Urubici/SC. Das referencias a execucao.">
+<meta name="description" content="Guia da cabana ecoeficiente de Maggie's Farm — Urubici/SC.">
 <meta property="og:title" content="Maggie's Farm — Guia do Projeto">
-<meta property="og:description" content="Refugio ecoeficiente no promontorio sobre o canion. Das referencias a execucao.">
+<meta property="og:description" content="Refugio ecoeficiente no promontorio sobre o canion.">
 </head>
 <body>
 <style>
@@ -121,6 +121,13 @@
   .figure{margin-top:8px}
   .plan{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
   .plan text{font-family:ui-monospace,monospace}
+  .mediafig{margin:30px 0 0}
+  .mediafig img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px}
+  .mediacap{font-family:ui-monospace,monospace;font-size:12px;color:var(--faint);letter-spacing:.03em;margin-top:12px;line-height:1.55}
+  .imgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0 0}
+  .imgrid figure{margin:0;display:flex;flex-direction:column}
+  .imgrid img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px}
+  @media(max-width:640px){.imgrid{grid-template-columns:1fr}}
 
   /* phases */
   .phase{display:grid;grid-template-columns:52px 1fr;gap:20px;padding:24px 0;border-top:1px solid var(--line)}
@@ -165,6 +172,10 @@
       <div class="f"><div class="k">Fundação</div><div class="v">Pedra ferro</div></div>
       <div class="f"><div class="k">Combustível</div><div class="v">Lenha local</div></div>
     </div>
+    <figure class="mediafig">
+      <img src="assets/lote-espraiado.jpg" alt="Lote 6 no Google Earth — perímetro, acesso, nascentes e APP" loading="lazy">
+      <figcaption class="mediacap">Lote 6 · Encosta do Espraiado (Google Earth) — perímetro em amarelo, acesso em vermelho, nascentes/APP em ciano, curvas de nível. O promontório desce para o cânion, à direita.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -189,6 +200,10 @@
       <h2>O sítio</h2>
       <p class="lede">Um esporão de pedra ferro debruçado sobre o cânion da Serra Catarinense. Tudo no projeto responde a este lugar.</p>
     </div>
+    <figure class="mediafig">
+      <img src="assets/lote-ge.jpg" alt="Vista aproximada do lote no Google Earth" loading="lazy">
+      <figcaption class="mediacap">O ombro de grama sobre rocha (área mais clara, recuada da borda) é onde a casa pousa; a mata densa à direita é a escarpa/APP que despenca no cânion.</figcaption>
+    </figure>
     <div class="two">
       <div>
         <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Geografia</h4>
@@ -218,6 +233,10 @@
       <p class="lede">A Casa do Penedo dá a alma (monolítico, ancorado na rocha); a engenharia nórdica dá a física (envelope quente e estanque).</p>
     </div>
     <p class="lead">A pedra <b>ancora, abriga e emociona</b>; um núcleo de madeira super-isolado vive atrás dela. A lição de ouro dos precedentes: <b>massa por dentro, isolamento por fora</b> — o erro dos primeiros Earthships foi confundir massa com isolamento.</p>
+    <div class="imgrid">
+      <figure><img src="assets/penedo.jpg" alt="Casa do Penedo, Fafe, Portugal" loading="lazy"><figcaption class="mediacap">Casa do Penedo (Fafe, PT) — a alma: monolítica, ancorada na rocha.</figcaption></figure>
+      <figure><img src="assets/ref-uruguai.jpg" alt="Casa de pedra rústico-minimalista sobre a planície" loading="lazy"><figcaption class="mediacap">Rústico-minimalista uruguaio — o Penedo refinado e habitável: face de pedra fechada + portal de madeira.</figcaption></figure>
+    </div>
     <div class="grid cols-3">
       <div class="block reveal"><h4>Forma</h4><h3>Rústico uruguaio</h3><p>Face de pedra fechada ao clima, um único portal de madeira, massa baixa emergindo da rocha. O Penedo refinado e habitável.</p></div>
       <div class="block reveal"><h4>Gêmeo do programa</h4><h3>ZeroCabin, Patagônia</h3><p>~40 m², off-grid, mesmo clima e orçamento: solar no telhado, chuva → potável, lenha como fonte única.</p></div>
