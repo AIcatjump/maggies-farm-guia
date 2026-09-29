@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <title>Maggie's Farm — Guia do Projeto</title>
 <meta name="description" content="Guia da cabana ecoeficiente de Maggie's Farm — Urubici/SC. Das referencias a execucao.">
 <meta property="og:title" content="Maggie's Farm — Guia do Projeto">
@@ -12,31 +12,12 @@
 <body>
 <style>
   :root{
-    /* LIGHT — primária: branco quase puro, muito ar */
+    color-scheme: light;
+    /* CLEAN CLARO — travado no claro (sem modo escuro, em qualquer aparelho) */
     --bg:#FBFAF7; --panel:#FFFFFF;
     --fg:#1B1A17; --muted:#6C685F; --faint:#9C978C;
     --line:#EAE7E0; --line-2:#DAD6CC;
     --accent:#B0491F; --slate:#4E6A70; --good:#5E7A3E; --warn:#93701E;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#17150F; --panel:#1D1A14;
-      --fg:#ECE7DB; --muted:#A69E90; --faint:#736B5D;
-      --line:#2B271F; --line-2:#3A352B;
-      --accent:#E0743C; --slate:#87A7AE; --good:#9CB471; --warn:#D3A44A;
-    }
-  }
-  :root[data-theme="light"]{
-    --bg:#FBFAF7; --panel:#FFFFFF;
-    --fg:#1B1A17; --muted:#6C685F; --faint:#9C978C;
-    --line:#EAE7E0; --line-2:#DAD6CC;
-    --accent:#B0491F; --slate:#4E6A70; --good:#5E7A3E; --warn:#93701E;
-  }
-  :root[data-theme="dark"]{
-    --bg:#17150F; --panel:#1D1A14;
-    --fg:#ECE7DB; --muted:#A69E90; --faint:#736B5D;
-    --line:#2B271F; --line-2:#3A352B;
-    --accent:#E0743C; --slate:#87A7AE; --good:#9CB471; --warn:#D3A44A;
   }
 
   *{box-sizing:border-box}
