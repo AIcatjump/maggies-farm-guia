@@ -1,0 +1,507 @@
+<style>
+  :root{
+    /* LIGHT — primária: branco quase puro, muito ar */
+    --bg:#FBFAF7; --panel:#FFFFFF;
+    --fg:#1B1A17; --muted:#6C685F; --faint:#9C978C;
+    --line:#EAE7E0; --line-2:#DAD6CC;
+    --accent:#B0491F; --slate:#4E6A70; --good:#5E7A3E; --warn:#93701E;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#17150F; --panel:#1D1A14;
+      --fg:#ECE7DB; --muted:#A69E90; --faint:#736B5D;
+      --line:#2B271F; --line-2:#3A352B;
+      --accent:#E0743C; --slate:#87A7AE; --good:#9CB471; --warn:#D3A44A;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#FBFAF7; --panel:#FFFFFF;
+    --fg:#1B1A17; --muted:#6C685F; --faint:#9C978C;
+    --line:#EAE7E0; --line-2:#DAD6CC;
+    --accent:#B0491F; --slate:#4E6A70; --good:#5E7A3E; --warn:#93701E;
+  }
+  :root[data-theme="dark"]{
+    --bg:#17150F; --panel:#1D1A14;
+    --fg:#ECE7DB; --muted:#A69E90; --faint:#736B5D;
+    --line:#2B271F; --line-2:#3A352B;
+    --accent:#E0743C; --slate:#87A7AE; --good:#9CB471; --warn:#D3A44A;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:17px;line-height:1.68;font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  h1,h2,h3{margin:0;font-weight:560;letter-spacing:-.02em;line-height:1.12;text-wrap:balance}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 28px}
+  .mono{font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+  .eyebrow{font-family:ui-monospace,monospace;font-size:11.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent)}
+  .measure{max-width:64ch}
+
+  /* top bar */
+  .bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);
+    backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;align-items:center;gap:18px;height:56px}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em;font-size:15px}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+  .bar nav{margin-left:auto;display:flex;gap:0;flex-wrap:wrap}
+  .bar nav a{font-size:12.5px;color:var(--muted);padding:6px 9px;border-radius:6px}
+  .bar nav a:hover{color:var(--fg)}
+  .bar nav a.on{color:var(--accent)}
+  @media (max-width:860px){.bar nav{display:none}}
+
+  /* hero */
+  .hero{padding:96px 0 64px;border-bottom:1px solid var(--line)}
+  .hero h1{font-size:clamp(42px,8vw,80px);font-weight:560;letter-spacing:-.035em;margin:20px 0 0}
+  .hero .sub{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:46ch;margin-top:22px;line-height:1.5}
+  .hero .thesis{margin-top:34px;font-size:clamp(18px,2.4vw,24px);font-weight:500;color:var(--fg)}
+  .hero .thesis b{color:var(--accent);font-weight:560}
+  .facts{display:flex;flex-wrap:wrap;gap:38px;margin-top:52px;padding-top:30px;border-top:1px solid var(--line)}
+  .facts .k{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .facts .v{font-size:19px;font-weight:560;margin-top:6px;font-variant-numeric:tabular-nums}
+  .facts .v small{font-weight:400;color:var(--muted);font-size:13px}
+
+  /* chapters */
+  .chapter{padding:80px 0;border-bottom:1px solid var(--line)}
+  .ch-head{margin-bottom:38px}
+  .ch-num{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;color:var(--accent);font-variant-numeric:tabular-nums}
+  .ch-head h2{font-size:clamp(26px,3.6vw,38px);margin-top:14px;font-weight:540}
+  .ch-head .lede{color:var(--muted);font-size:17px;margin-top:14px;max-width:60ch;line-height:1.5}
+  .lead{font-size:19px;line-height:1.6;max-width:64ch;color:var(--fg)}
+  .lead b,.lead strong{font-weight:560}
+
+  /* open blocks grid (no heavy cards) */
+  .grid{display:grid;gap:2px;margin-top:34px;background:var(--line);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+  .cols-2{grid-template-columns:repeat(2,1fr)}
+  .cols-3{grid-template-columns:repeat(3,1fr)}
+  @media (max-width:720px){.cols-2,.cols-3{grid-template-columns:1fr}}
+  .block{background:var(--bg);padding:26px}
+  .block h4{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 14px;font-weight:500}
+  .block h3{font-size:18px;margin:0 0 10px;font-weight:560}
+  .block p{color:var(--muted);font-size:15px;line-height:1.58}
+  .block p+p{margin-top:10px}
+
+  /* plain lists */
+  ul.clean{list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:0}
+  ul.clean li{padding:14px 0 14px 20px;border-top:1px solid var(--line);position:relative;color:var(--muted);font-size:15.5px;line-height:1.5}
+  ul.clean li:first-child{border-top:0}
+  ul.clean li::before{content:"—";position:absolute;left:0;color:var(--accent)}
+  ul.clean li b{color:var(--fg);font-weight:560}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:8px}
+  @media (max-width:720px){.two{grid-template-columns:1fr;gap:0}}
+
+  /* callout — só filete, sem preenchimento */
+  .callout{border-left:2px solid var(--warn);padding:6px 0 6px 20px;margin-top:32px;max-width:70ch}
+  .callout.danger{border-color:var(--accent)}
+  .callout .lbl{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--warn);font-weight:500}
+  .callout.danger .lbl{color:var(--accent)}
+  .callout p{font-size:15.5px;margin-top:8px;color:var(--fg);line-height:1.55}
+  .callout a{color:var(--accent);border-bottom:1px solid color-mix(in srgb,var(--accent) 40%,transparent)}
+
+  .tag{display:inline-block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.05em;color:var(--muted);white-space:nowrap}
+  .tag::before{content:"· "}
+  .tag.ok{color:var(--good)} .tag.warn{color:var(--warn)} .tag.slate{color:var(--slate)}
+
+  /* spec table — filetes finos */
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:26px}
+  table.spec{width:100%;border-collapse:collapse;font-size:15px}
+  .spec th,.spec td{text-align:left;padding:13px 14px 13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+  .spec thead th{font-family:ui-monospace,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:500;border-bottom-color:var(--line-2)}
+  .spec td.num{font-family:ui-monospace,monospace;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--fg)}
+  .spec td b{font-weight:560}
+
+  /* flow */
+  .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin-top:26px}
+  .node{background:var(--panel);border:1px solid var(--line-2);border-radius:8px;padding:13px 15px;min-width:130px;flex:1}
+  .node .nk{font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .node .nv{font-size:14.5px;font-weight:540;margin-top:4px;line-height:1.35}
+  .node.src{border-color:color-mix(in srgb,var(--accent) 35%,var(--line-2))}
+  .node.hub{border-color:color-mix(in srgb,var(--slate) 40%,var(--line-2))}
+  .arrow{align-self:center;color:var(--faint);font-family:ui-monospace,monospace}
+  .fcap{font-family:ui-monospace,monospace;font-size:12px;color:var(--faint);margin-top:14px;line-height:1.5}
+
+  /* plan */
+  .figure{margin-top:8px}
+  .plan{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+  .plan text{font-family:ui-monospace,monospace}
+
+  /* phases */
+  .phase{display:grid;grid-template-columns:52px 1fr;gap:20px;padding:24px 0;border-top:1px solid var(--line)}
+  .phase:first-child{border-top:0}
+  .phase .pn{font-family:ui-monospace,monospace;font-size:22px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+  .phase h3{font-size:17px;font-weight:560}
+  .phase p{color:var(--muted);font-size:15px;margin-top:7px;max-width:68ch;line-height:1.55}
+
+  footer{padding:56px 0 80px}
+  footer .wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media (max-width:720px){footer .wrap{grid-template-columns:1fr}}
+  footer .lab{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  footer p{color:var(--muted);font-size:13.5px;margin-top:10px;max-width:56ch;line-height:1.55}
+
+  .reveal{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="brand"><span class="dot"></span> Maggie's Farm</span>
+    <nav>
+      <a href="#visao">Visão</a><a href="#sitio">Sítio</a><a href="#partido">Partido</a>
+      <a href="#implantacao">Implantação</a><a href="#estrutura">Estrutura</a><a href="#conforto">Conforto</a>
+      <a href="#aquecimento">Aquecimento</a><a href="#agua">Água</a><a href="#materiais">Materiais</a>
+      <a href="#execucao">Execução</a><a href="#seguranca">Segurança</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Lote 6 · Encosta do Espraiado · Urubici / SC</span>
+    <h1>Maggie's Farm</h1>
+    <p class="sub">Uma cabana de 40 m² fundada na rocha viva de um promontório sobre o cânion, projetada e construída pelo dono — autônoma em água, energia e calor.</p>
+    <p class="thesis"><b>Penedo</b> na alma. <b>Copenhagen</b> na física.</p>
+    <div class="facts">
+      <div class="f"><div class="k">Altitude</div><div class="v">~1.450 <small>m</small></div></div>
+      <div class="f"><div class="k">Área</div><div class="v">40 <small>m²</small></div></div>
+      <div class="f"><div class="k">Declive</div><div class="v">26 <small>%</small></div></div>
+      <div class="f"><div class="k">Fundação</div><div class="v">Pedra ferro</div></div>
+      <div class="f"><div class="k">Combustível</div><div class="v">Lenha local</div></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <section class="chapter" id="visao">
+    <div class="ch-head"><div class="ch-num">00 — VISÃO</div>
+      <h2>A visão</h2>
+      <p class="lede">Este guia é a fonte única de verdade da obra: das referências à execução. Quem entra no projeto lê isto primeiro.</p>
+    </div>
+    <p class="lead">Um micro-refúgio de volume único, todo aberto, que vira as costas de <b>pedra</b> para o vento de serra e abre o peito de <b>vidro</b> para o abismo. O fogo no centro; a vista a leste; a rocha por baixo e por dentro. A ambição é honesta e alta: um <b>case de construção ecoeficiente</b> — autônomo, seguro e belo.</p>
+    <div class="grid cols-3">
+      <div class="block reveal"><h4>O que é</h4><h3>Um só ambiente</h3><p>Cama king, fogão a lenha de massa, 2 poltronas para a vista, uma bancada mínima, um banheiro — a única caixa fechada. Nada mais.</p></div>
+      <div class="block reveal"><h4>Como se sustenta</h4><h3>Autonomia total</h3><p>Água da chuva + nascente por gravidade. Energia solar. Calor da lenha do próprio lote. Sem depender de rede.</p></div>
+      <div class="block reveal"><h4>Por que é case</h4><h3>Rigor + lugar</h3><p>Desempenho medido (não marketing), materiais do sítio, integração à paisagem, e a pedra ferro como identidade.</p></div>
+    </div>
+    <div class="callout"><span class="lbl">Nota de leitura</span><p>Números marcados <b>ESTIMATIVA</b> são ordem de grandeza; os de estrutura são <b>pré-dimensionamento</b>. O fechamento final exige topografia, ensaios e cálculo com <b>ART</b> — detalhado em <a href="#seguranca">Segurança</a>.</p></div>
+  </section>
+
+  <section class="chapter" id="sitio">
+    <div class="ch-head"><div class="ch-num">01 — SÍTIO</div>
+      <h2>O sítio</h2>
+      <p class="lede">Um esporão de pedra ferro debruçado sobre o cânion da Serra Catarinense. Tudo no projeto responde a este lugar.</p>
+    </div>
+    <div class="two">
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Geografia</h4>
+        <ul class="clean">
+          <li><b>Promontório sobre cânion</b> — a encosta despenca para L/SE; os paredões são a vista.</li>
+          <li><b>Platô de pedra ferro</b> com grama — fundação em rocha viva (zero recalque, sem gelo levantando).</li>
+          <li><b>Escarpa = APP</b> (não-construir) na queda; implantar recuado 15–30 m da borda.</li>
+          <li><b>Estrada de terra já chega</b> — o maior driver de custo resolvido.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Clima &amp; vento</h4>
+        <ul class="clean">
+          <li><b>~1.450 m</b> — geadas, neve ocasional, mínima regional −17,8 °C.</li>
+          <li><b>Vento de serra:</b> região provou 178,9 km/h. Frentes: NW antes, S/SW depois.</li>
+          <li><b>Borda de cânion amplifica</b> (updraft) — a lip é o ponto mais turbulento; recuar.</li>
+          <li><b>Vista E/SE a sotavento</b> dos ventos dominantes → favorável.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><span class="lbl">Confirmar em campo</span><p>Bússola (vista × sol de inverno ao N), ponto mais abrigado do ombro, recuo seguro da lip, afloramento de pedra ferro sã, limite do lote, e existência/cota da nascente.</p></div>
+  </section>
+
+  <section class="chapter" id="partido">
+    <div class="ch-head"><div class="ch-num">02 — PARTIDO &amp; REFERÊNCIAS</div>
+      <h2>Partido &amp; referências</h2>
+      <p class="lede">A Casa do Penedo dá a alma (monolítico, ancorado na rocha); a engenharia nórdica dá a física (envelope quente e estanque).</p>
+    </div>
+    <p class="lead">A pedra <b>ancora, abriga e emociona</b>; um núcleo de madeira super-isolado vive atrás dela. A lição de ouro dos precedentes: <b>massa por dentro, isolamento por fora</b> — o erro dos primeiros Earthships foi confundir massa com isolamento.</p>
+    <div class="grid cols-3">
+      <div class="block reveal"><h4>Forma</h4><h3>Rústico uruguaio</h3><p>Face de pedra fechada ao clima, um único portal de madeira, massa baixa emergindo da rocha. O Penedo refinado e habitável.</p></div>
+      <div class="block reveal"><h4>Gêmeo do programa</h4><h3>ZeroCabin, Patagônia</h3><p>~40 m², off-grid, mesmo clima e orçamento: solar no telhado, chuva → potável, lenha como fonte única.</p></div>
+      <div class="block reveal"><h4>Manual da autonomia</h4><h3>The Autonomous House</h3><p>Vale (Inglaterra): chuva → potável, sanitário de compostagem, super-isolamento, HRV, sunspace solar.</p></div>
+      <div class="block reveal"><h4>Pousar leve</h4><h3>Skigard Hytte · Murcutt</h3><p>Apoiar em pilotis sobre a rocha sem terraplenar. Usar a retro para cisterna, muros e acesso — não para decapitar o promontório.</p></div>
+      <div class="block reveal"><h4>Vento &amp; foco</h4><h3>Refúgios alpinos</h3><p>Forma baixa que o vento contorna; fogo no centro distribuindo por radiação; janelas que emolduram vistas, não vidro para todo lado.</p></div>
+      <div class="block reveal"><h4>Desempenho</h4><h3>Passivhaus alpino</h3><p>Casas de pedra a 1.200 m "sem sistema de aquecimento" — só isolamento + estanqueidade + HRV. O alvo mensurável.</p></div>
+    </div>
+    <p class="lead" style="margin-top:34px">Paleta material: <span class="tag">pedra ferro escura</span> <span class="tag">madeira clara</span> <span class="tag slate">vidro DVH</span> <span class="tag">brasa / óxido</span> — mais escura e ferrosa que o granito uruguaio, mais nórdica.</p>
+  </section>
+
+  <section class="chapter" id="implantacao">
+    <div class="ch-head"><div class="ch-num">03 — IMPLANTAÇÃO</div>
+      <h2>Implantação</h2>
+      <p class="lede">Retângulo de 8 × 5 m no ombro de rocha, recuado da lip. Pedra na face que apanha o clima; vidro na face que apanha o abismo.</p>
+    </div>
+    <div class="two">
+      <figure class="figure reveal" style="margin:0">
+        <svg class="plan" viewBox="0 0 520 360" role="img" aria-label="Planta esquemática da implantação">
+          <g transform="translate(42,38)" font-size="12">
+            <line x1="0" y1="14" x2="0" y2="-4" stroke="var(--accent)" stroke-width="1.6"/>
+            <path d="M0,-9 L4,1 L-4,1 Z" fill="var(--accent)"/>
+            <text x="-4" y="-13" fill="var(--accent)">N</text>
+          </g>
+          <text x="28" y="200" fill="var(--faint)" font-size="10.5" transform="rotate(-90 28 200)">◄ ESTRADA (O)</text>
+          <rect x="120" y="86" width="248" height="190" rx="4" fill="none" stroke="var(--line-2)" stroke-width="1.4"/>
+          <line x1="120" y1="86" x2="120" y2="276" stroke="var(--fg)" stroke-width="5"/>
+          <line x1="120" y1="276" x2="368" y2="276" stroke="var(--fg)" stroke-width="5"/>
+          <line x1="368" y1="88" x2="368" y2="274" stroke="var(--slate)" stroke-width="4"/>
+          <line x1="150" y1="86" x2="320" y2="86" stroke="var(--slate)" stroke-width="2.4" stroke-dasharray="2 6"/>
+          <rect x="115" y="146" width="9" height="30" fill="var(--accent)"/>
+          <text x="72" y="140" fill="var(--accent)" font-size="10">PORTAL</text>
+          <rect x="148" y="104" width="66" height="40" rx="3" fill="none" stroke="var(--line-2)"/>
+          <text x="154" y="128" fill="var(--muted)" font-size="10">CAMA K.</text>
+          <circle cx="244" cy="192" r="15" fill="none" stroke="var(--accent)" stroke-width="1.4"/>
+          <text x="230" y="224" fill="var(--accent)" font-size="10">FOGÃO</text>
+          <circle cx="332" cy="150" r="6" fill="none" stroke="var(--muted)"/><circle cx="332" cy="172" r="6" fill="none" stroke="var(--muted)"/>
+          <text x="150" y="250" fill="var(--faint)" font-size="9">banho · kitchenette · espinha O</text>
+          <text x="382" y="156" fill="var(--slate)" font-size="11">VIDRO DVH</text>
+          <text x="382" y="200" fill="var(--faint)" font-size="10">CÂNION ►</text>
+          <text x="382" y="214" fill="var(--faint)" font-size="10">L / SE</text>
+          <line x1="430" y1="86" x2="430" y2="276" stroke="var(--warn)" stroke-width="1" stroke-dasharray="3 3"/>
+          <text x="440" y="188" fill="var(--warn)" font-size="9" transform="rotate(90 440 188)">RECUO 15–30 m · LIP (APP)</text>
+          <text x="120" y="302" fill="var(--faint)" font-size="10">SUL — parede cheia de pedra ferro</text>
+        </svg>
+        <figcaption class="fcap">Planta esquemática — N em cima, cânion à direita. Não escalar; cotas no projeto.</figcaption>
+      </figure>
+      <div>
+        <div class="scroll" style="margin-top:0"><table class="spec">
+          <thead><tr><th>Face</th><th>Elemento</th><th>Razão</th></tr></thead>
+          <tbody>
+            <tr><td><b>Leste</b> 8 m</td><td>Vidro DVH</td><td>A vista; sol da manhã</td></tr>
+            <tr><td><b>Oeste</b> 8 m</td><td>Pedra + portal</td><td>Escudo de vento; chegada</td></tr>
+            <tr><td><b>Norte</b> 5 m</td><td>Janela</td><td>Sol baixo de inverno</td></tr>
+            <tr><td><b>Sul</b> 5 m</td><td>Parede de pedra</td><td>Barra vento pós-frontal</td></tr>
+          </tbody>
+        </table></div>
+        <ul class="clean">
+          <li><b>Cama</b> no canto N — acorda com sol + vista.</li>
+          <li><b>Fogão de massa</b> central, dividindo cama/estar.</li>
+          <li><b>Cobertura 1 água</b>, baixo perfil, ancorada; beiral que não vira "asa".</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="estrutura">
+    <div class="ch-head"><div class="ch-num">04 — ESTRUTURA</div>
+      <h2>Estrutura &amp; segurança estrutural</h2>
+      <p class="lede">Aço (primário) + madeira (envelope), fundado direto na rocha. O vento é a carga que manda.</p>
+    </div>
+    <div class="two">
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Fundação na rocha</h4>
+        <ul class="clean">
+          <li>Dreno de interceptação a montante <b>antes</b> de tudo.</li>
+          <li>Plintos escalonados + <b>chumbadores químicos</b>. Nivelar por cima, não escavar.</li>
+          <li>Ancoragem antivento na rocha sã — furar pedra ferro só aqui.</li>
+          <li>Massa do fogão em <b>fundação própria</b>, nunca no aço.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Esqueleto</h4>
+        <ul class="clean">
+          <li>Grelha e pilares de aço sobre crawlspace ventilado.</li>
+          <li><b>Contraventamento</b> — trava o racking lateral do vento.</li>
+          <li>Aço galvanizado + pintura; ligação anti-corrosão com a madeira.</li>
+          <li>Cobertura baixa, fixação reforçada telha→estrutura→ancoragem.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Pré-dimensionamento · conservador</th><th>Valor</th><th>Base</th></tr></thead>
+      <tbody>
+        <tr><td>Vento — Vk</td><td class="num">58,5 m/s</td><td>V0 45 × S1 1,30 · NBR 6123 <span class="tag warn">confirmar</span></td></tr>
+        <tr><td>Pressão dinâmica</td><td class="num">~2,1 kN/m²</td><td>q = 0,613 · Vk²</td></tr>
+        <tr><td>Sucção no telhado (uplift)</td><td class="num">~170 kN</td><td>líquido majorado (γ 1,4)</td></tr>
+        <tr><td>Ancoragem</td><td class="num">8 × M20</td><td>resina, ~200 mm em rocha sã → FS ≥ 2 <span class="tag ok">fecha</span></td></tr>
+        <tr><td>Piso (sobrecarga)</td><td class="num">~2,7 kN/m²</td><td>NBR 6120 + permanente</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout danger"><span class="lbl">Segurança — não pular</span><p>Mesmo sem licença, <b>vento (NBR 6123 + fator do platô) e ancoragem exigem cálculo com ART</b> + <b>ensaio de arrancamento na rocha</b>. É seguro de vida num topo que já provou 178 km/h. Este pré-dimensionamento mostra que fecha com folga; o número final é do calculista.</p></div>
+  </section>
+
+  <section class="chapter" id="conforto">
+    <div class="ch-head"><div class="ch-num">05 — CONFORTO</div>
+      <h2>Envelope &amp; conforto</h2>
+      <p class="lede">O "delicioso" vem de aquecer superfícies, não o ar. 70% do conforto é envelope + estanqueidade; 30% a fonte.</p>
+    </div>
+    <p class="lead">Com piso e paredes mornos, você fica confortável com o <b>ar mais fresco</b> — pés quentes, cabeça fresca, sem correntes. O maior investimento de conforto não é o fogão: é <b>selar o ar e isolar</b>.</p>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Elemento</th><th>Alvo (R / U)</th><th>Espessura aprox.</th></tr></thead>
+      <tbody>
+        <tr><td>Paredes</td><td class="num">R-38–45 · U ~0,15</td><td>~25–28 cm lã / ~30 cm fibra de madeira</td></tr>
+        <tr><td>Cobertura</td><td class="num">R-60 · U ~0,08</td><td>~30 cm — capriche (maior perda)</td></tr>
+        <tr><td>Piso s/ pilotis</td><td class="num">R-38–60</td><td>isolar por baixo, protegido do vento</td></tr>
+        <tr><td>Vidro DVH</td><td class="num">U ~1,3–1,6</td><td>low-e + argônio + warm-edge</td></tr>
+        <tr><td>Estanqueidade</td><td class="num">≤ 1,0–1,5 ACH50</td><td>blower-door <b>durante</b> a obra</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid cols-3">
+      <div class="block reveal"><h4>Ponte térmica</h4><h3>Isolar por fora do aço</h3><p>O aço vaza calor. Camada rígida contínua externa rompe a ponte — crítico na estrutura híbrida.</p></div>
+      <div class="block reveal"><h4>Umidade</h4><h3>Vapor no lado quente</h3><p>Barreira por dentro, permeável por fora (seca para fora). Ar selado corta o grosso do risco de mofo.</p></div>
+      <div class="block reveal"><h4>Vidro à noite</h4><h3>Cortina térmica</h3><p>De dia, vista e sol; de noite o DVH vira radiador frio. Cortina vedada reduz perda 25–50%.</p></div>
+    </div>
+    <div class="callout"><span class="lbl">Casa estanque + lenha</span><p>Ar de combustão dutado ao fogão + <b>detector de CO</b> (inegociável) + idealmente um <b>HRV</b> pequeno. A 1.450 m a tiragem puxa diferente — confirmar com o fabricante.</p></div>
+  </section>
+
+  <section class="chapter" id="aquecimento">
+    <div class="ch-head"><div class="ch-num">06 — AQUECIMENTO</div>
+      <h2>Aquecimento</h2>
+      <p class="lede">Um fogão de massa de pedra ferro — coração refratário, corpo de pedra — que irradia a noite inteira e ainda aquece piso, parede e água.</p>
+    </div>
+    <p class="lead">Você queima forte 1–2× por dia (~15–30 kg de lenha, 2–3 h); a massa engole o calor e <b>irradia suave por 12–24 h</b>. Combustão limpa (80–90%). Referência real no Sul: uma estufa russa de ~1 t aquece 90 m² a noite toda com 15 kg de lenha — a tua cabana tem menos da metade.</p>
+    <div class="figure reveal">
+      <div class="flow">
+        <div class="node src"><div class="nk">Fonte principal</div><div class="nv">Fogão de massa · pedra ferro</div></div>
+        <div class="node src"><div class="nk">Apoio (dia)</div><div class="nv">Solar térmico · tubo evacuado + glicol</div></div>
+        <span class="arrow">→</span>
+        <div class="node hub"><div class="nk">Coração</div><div class="nv">Tanque de inércia 300–500 L</div></div>
+        <span class="arrow">→</span>
+        <div class="node"><div class="nk">Distribuição</div><div class="nv">PEX · piso + parede radiante · água quente</div></div>
+      </div>
+      <p class="fcap">Fluxo hidrônico. Serpentina no núcleo do fogão → buffer → PEX. Solar entra embaixo do tanque (frio); lenha, em cima.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="block reveal"><h4>O fogão de pedra</h4><h3>Refratário + pedra ferro</h3><p>A fornalha (800–1000 °C) é <b>tijolo refratário</b> — pedra crua racha. O corpo, banco e parede são pedra ferro (densa = guarda muito calor). Núcleo flutuante.</p></div>
+      <div class="block reveal"><h4>Piso &amp; parede</h4><h3>Radiante seco em PEX</h3><p>Placas de alumínio + PEX-a (leve, sem contrapiso — bom sobre pilotis). Baixa temperatura. Dutos de fumaça aquecem banco/parede sem bomba.</p></div>
+      <div class="block reveal"><h4>Solar térmico</h4><h3>Tubo evacuado + glicol</h3><p>Ganha da placa plana no frio (~61% vs 46%). Circuito fechado a glicol (anticongelante); água de banho sempre dentro de casa.</p></div>
+      <div class="block reveal"><h4>Backup</h4><h3>Mini-split cold-climate</h3><p>Seguro automático que segura a casa acima do congelamento quando o fogo apaga ou você viaja; refresca no verão. A massa é o coração.</p></div>
+      <div class="block reveal"><h4>Proporção</h4><h3>Massa certa, não a maior</h3><p>Numa cabana super-isolada, o risco nº1 é superaquecer. Núcleo compacto; ~10–15 kW já sobra. "Absurdo" de beleza, não de tamanho.</p></div>
+      <div class="block reveal"><h4>Água quente</h4><h3>~150–200 L de AQS</h3><p>Um kit de 15–20 tubos evacuados cobre banho de 1–2 pessoas com folga, no mesmo tanque.</p></div>
+    </div>
+    <div class="callout danger"><span class="lbl">Segurança da caldeira a lenha</span><p>A lenha não "desliga": se a bomba/energia cai, a água pode ferver. Obrigatório: <b>tanque de inércia + válvula de descarga térmica (~95 °C) + loop de dissipação por gravidade + vaso de expansão + válvula de alívio 3 bar</b> + bomba com bateria. Não é opcional.</p></div>
+  </section>
+
+  <section class="chapter" id="agua">
+    <div class="ch-head"><div class="ch-num">07 — ÁGUA</div>
+      <h2>Água</h2>
+      <p class="lede">Urubici chove ~2.100 mm/ano bem distribuídos: o problema não é escassez — é geada e potabilização.</p>
+    </div>
+    <div class="figure reveal">
+      <div class="flow">
+        <div class="node src"><div class="nk">Fonte 1</div><div class="nv">Nascente (gravidade, se acima)</div></div>
+        <div class="node src"><div class="nk">Fonte 2</div><div class="nv">Telhado 50 m² → first-flush</div></div>
+        <span class="arrow">→</span>
+        <div class="node hub"><div class="nk">Reserva</div><div class="nv">Cisterna enterrada 10.000 L</div></div>
+        <span class="arrow">→</span>
+        <div class="node"><div class="nk">Tratamento (dentro)</div><div class="nv">20 µm → 5 µm → carvão → UV</div></div>
+        <span class="arrow">→</span>
+        <div class="node"><div class="nk">Uso</div><div class="nv">Gravidade (plano A)</div></div>
+      </div>
+      <p class="fcap">Se houver nascente acima da cota, ela é a fonte primária e a chuva o backup — zero energia.</p>
+    </div>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Balanço</th><th>Valor</th><th>Nota</th></tr></thead>
+      <tbody>
+        <tr><td>Captação anual (50 m² · C 0,8)</td><td class="num">~84.000 L</td><td>≈ 2× a demanda</td></tr>
+        <tr><td>Pior mês (abr)</td><td class="num">~4.800 L</td><td>vs ~3.900 L de consumo → superávit</td></tr>
+        <tr><td>Cisterna</td><td class="num">10.000 L</td><td>~75 dias de autonomia total</td></tr>
+        <tr><td>Consumo (2 pessoas)</td><td class="num">~130 L/dia</td><td>frugal</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid cols-2">
+      <div class="block reveal"><h4>Geada é o inimigo</h4><h3>Enterrar resolve 90%</h3><p>Reserva e tubos enterrados (30–50 cm) não congelam. Filtros e UV ficam dentro da cabana aquecida. Tanque elevado exposto racha — evitar.</p></div>
+      <div class="block reveal"><h4>Potável</h4><h3>Filtros + UV 254 nm</h3><p>Mata 99,9% sem químico/sabor. Backup de cloro se faltar energia. Nascente também passa por UV + análise de coliformes.</p></div>
+    </div>
+    <div class="callout"><span class="lbl">Legal &amp; norma</span><p>Nascente = APP → verificar outorga antes de intervir; captação pequena (tubo + brita). Normas: <b>NBR 15527</b> (chuva), <b>NBR 10844</b> (calhas). Confirmar precipitação na estação INMET de São Joaquim.</p></div>
+  </section>
+
+  <section class="chapter" id="materiais">
+    <div class="ch-head"><div class="ch-num">08 — MATERIAIS</div>
+      <h2>Materiais &amp; custo-benefício</h2>
+      <p class="lede">O caro nesses sistemas é mão de obra + transporte — e você tem pedra, lenha, a retro e as próprias mãos. Faixas ESTIMATIVA, cotar localmente.</p>
+    </div>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Sistema</th><th>Especificação</th><th>Faixa (R$) · estimativa</th></tr></thead>
+      <tbody>
+        <tr><td>Fogão de massa</td><td>núcleo refratário + corpo de pedra ferro</td><td class="num">núcleo ~5k+ · pedra/MO própria</td></tr>
+        <tr><td>Piso radiante seco</td><td>PEX-a + placas alumínio + MO</td><td class="num">~12.000 (40 m²)</td></tr>
+        <tr><td>Tanque de inércia + segurança</td><td>buffer 300–500 L, válvulas, bomba</td><td class="num">cotar (integrador)</td></tr>
+        <tr><td>Solar térmico</td><td>tubo evacuado 200 L</td><td class="num">~3.500–5.000</td></tr>
+        <tr><td>Água (cisterna + tratamento)</td><td>enterrada + filtros + UV, por gravidade</td><td class="num">~6.000–20.000</td></tr>
+        <tr><td>Mini-split cold-climate</td><td>backup + verão</td><td class="num">cotar</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout"><span class="lbl">Onde cada real rende mais</span><p><b>1º Estanqueidade ao ar</b> → <b>2º envelope</b> (cobertura → piso → paredes) → <b>3º fonte + backup</b> → <b>4º janelas</b> + cortina noturna. Investir na fonte antes do envelope é o erro clássico.</p></div>
+  </section>
+
+  <section class="chapter" id="execucao">
+    <div class="ch-head"><div class="ch-num">09 — EXECUÇÃO</div>
+      <h2>Execução — sequência de obra</h2>
+      <p class="lede">A ordem no canteiro. A retro paga a si mesma em acesso, dreno, cisterna e contenção de pedra.</p>
+    </div>
+    <div class="phase reveal"><div class="pn">0</div><div><h3>Dados que a estrutura exige</h3><p>Topografia (curvas 1 m), sondagem/estabilidade de talude, rocha sã × alterada, cargas (vento governa). Confirmar nascente e cota.</p></div></div>
+    <div class="phase reveal"><div class="pn">1</div><div><h3>Fundação na rocha</h3><p>Dreno de interceptação → raspar grama → plintos + chumbadores → ancoragem antivento. Cisterna enterrada (retro).</p></div></div>
+    <div class="phase reveal"><div class="pn">2</div><div><h3>Esqueleto</h3><p>Grelha e pilares de aço + contraventamento + cobertura ancorada + madeira secundária + proteção do aço.</p></div></div>
+    <div class="phase reveal"><div class="pn">3</div><div><h3>Fechar água &amp; vento</h3><p>Envelope de madeira super-isolado + telhado + estanqueidade (blower-door) + DVH. Vapor no lado quente.</p></div></div>
+    <div class="phase reveal"><div class="pn">4</div><div><h3>Pedra &amp; calor</h3><p>Pele de pedra ferro descolada + massa/fogão em fundação própria + hidrônico (buffer, PEX, solar, segurança).</p></div></div>
+    <div class="phase reveal"><div class="pn">5</div><div><h3>Autonomia &amp; comissionamento</h3><p>PV off-grid + água (filtros/UV) + esgoto ecológico. Testar aquecimento, blower-door e a drenagem numa chuva real.</p></div></div>
+  </section>
+
+  <section class="chapter" id="seguranca">
+    <div class="ch-head"><div class="ch-num">10 — SEGURANÇA</div>
+      <h2>Segurança — os inegociáveis</h2>
+      <p class="lede">O que transforma "incrível" em "incrível e seguro". Cada item tem custo real de vida ou de obra.</p>
+    </div>
+    <div class="two">
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Estrutura &amp; fogo</h4>
+        <ul class="clean">
+          <li><b>Cálculo de vento (NBR 6123)</b> e ancoragem, com ART.</li>
+          <li><b>Ensaio de arrancamento</b> na pedra ferro real.</li>
+          <li>Caldeira: <b>heat-dump por gravidade</b> + descarga térmica + alívio.</li>
+          <li><b>Detector de CO</b> + ar de combustão dutado; núcleo refratário.</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Sítio &amp; água</h4>
+        <ul class="clean">
+          <li>Recuo da lip (estabilidade de borda + APP).</li>
+          <li>Dreno de interceptação a montante — rocha não perdoa.</li>
+          <li>UV + análise de coliformes antes de considerar potável.</li>
+          <li>Estanqueidade testada (blower-door) — conforto e sem mofo.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout danger"><span class="lbl">Regra final</span><p>Este guia dá o método, a direção e o pré-dimensionamento que fecham com folga. O <b>fechamento com ART, ensaios e topografia real</b> é o cadeado que transforma os números num projeto certificado seguro. O melhor engenheiro confere, testa e assina — não confia só no próprio traço.</p></div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p class="lab">Maggie's Farm · Guia do projeto</p>
+      <p>Refúgio ecoeficiente · Lote 6, Encosta do Espraiado, Urubici/SC · ~1.450 m. Fonte única de verdade da obra — das referências à execução.</p>
+    </div>
+    <div>
+      <p class="lab">Síntese · 28.09.2026</p>
+      <p>Números ESTIMATIVA/preliminares. Fechamento final: topografia, ensaios e cálculo com ART. Confirmar dados de campo antes de estaquear.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduce && 'IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+      },{rootMargin:'0px 0px -6% 0px',threshold:.06});
+      document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+    } else { document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');}); }
+    var links=[].slice.call(document.querySelectorAll('.bar nav a')), map={};
+    links.forEach(function(a){var id=a.getAttribute('href').slice(1),s=document.getElementById(id);if(s)map[id]=a;});
+    var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.remove('on');});var a=map[e.target.id];if(a)a.classList.add('on');}});},{rootMargin:'-45% 0px -50% 0px'});
+    Object.keys(map).forEach(function(id){so.observe(document.getElementById(id));});
+  })();
+</script>
