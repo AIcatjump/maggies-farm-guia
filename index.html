@@ -165,7 +165,7 @@
     <nav>
       <a href="#visao">Visão</a><a href="#sitio">Sítio</a><a href="#partido">Partido</a>
       <a href="#implantacao">Implantação</a><a href="#estrutura">Estrutura</a><a href="#conforto">Conforto</a>
-      <a href="#aquecimento">Aquecimento</a><a href="#agua">Água</a><a href="#materiais">Materiais</a>
+      <a href="#aquecimento">Aquecimento</a><a href="#agua">Água</a><a href="#energia">Energia</a><a href="#materiais">Materiais</a>
       <a href="#execucao">Execução</a><a href="#seguranca">Segurança</a>
     </nav>
   </div>
@@ -427,8 +427,67 @@
     <div class="callout"><span class="lbl">Legal &amp; norma</span><p>Nascente = APP → verificar outorga antes de intervir; captação pequena (tubo + brita). Normas: <b>NBR 15527</b> (chuva), <b>NBR 10844</b> (calhas). Confirmar precipitação na estação INMET de São Joaquim.</p></div>
   </section>
 
+  <section class="chapter" id="energia">
+    <div class="ch-head"><div class="ch-num">08 — ENERGIA</div>
+      <h2>Energia — off-grid solar</h2>
+      <p class="lede">O fotovoltaico faz só eletricidade — o calor é lenha + solar térmico. A base que você já tem cobre o essencial; o que define o tamanho do sistema é a cozinha.</p>
+    </div>
+    <p class="lead">Teu sistema atual — <b>550 W de painel · 4×110 Ah chumbo-ácido em 24 V · inversor 2.000 W</b> — é uma base real para o essencial. Mas a geração de um painel só (~1–1,4 kWh/dia no inverno) é o <b>gargalo</b>: com um painel, o banco vive descarregando. A decisão que dimensiona tudo é <b>como você cozinha</b> — elétrica multiplica o sistema por 3–4×; gás + lenha mantém enxuto.</p>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Base atual</th><th>Valor</th><th>Leitura</th></tr></thead>
+      <tbody>
+        <tr><td>Geração (1×550 W)</td><td class="num">~1,0–1,4 kWh/dia</td><td>inverno · o gargalo</td></tr>
+        <tr><td>Armazenamento útil</td><td class="num">~2,6 kWh</td><td>chumbo-ácido a 50% DoD</td></tr>
+        <tr><td>Inversor</td><td class="num">2.000 W</td><td>senoidal pura (confirmar) p/ o valvulado</td></tr>
+        <tr><td>Cobre bem</td><td class="num">~1 dia frugal</td><td>luz, bombas, laptop, UV por fluxo, hi-fi</td></tr>
+        <tr><td>Não cobre</td><td class="num">—</td><td>cozinha elétrica · mini-split contínuo</td></tr>
+      </tbody>
+    </table></div>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Auditoria de carga</th><th>Frugal</th><th>+ cozinha + mini-split</th></tr></thead>
+      <tbody>
+        <tr><td>Consumo/dia</td><td class="num">~2,5 kWh</td><td class="num">~7–9 kWh</td></tr>
+        <tr><td>Cozinha elétrica</td><td>—</td><td>indução ~1 kWh/hora; pico &gt; 3 kW</td></tr>
+        <tr><td>Mini-split (backup)</td><td>—</td><td>~2–4 kWh em dia frio</td></tr>
+      </tbody>
+    </table></div>
+    <div class="callout danger"><span class="lbl">A regra que define o sistema</span><p>Cozinhar por eletricidade é a maior carga off-grid — com o mini-split, <b>triplica a 4× o sistema</b>. Recomendação: <b>gás (GLP) + o próprio fogão a lenha</b> para cozinhar; elétrico só pontual (air fryer em dia de sol forte). Isso mantém o sistema pequeno e evita o salto para R$ 35–50 mil.</p></div>
+    <div class="grid cols-3">
+      <div class="block reveal"><h4>Baterias no frio</h4><h3>O ponto crítico a 1.450 m</h3><p><b>LiFePO4 não pode CARREGAR abaixo de 0 °C</b> (dano permanente). Solução: bateria <b>dentro da cabana aquecida</b> + BMS com corte por baixa temperatura (marca séria) + opção autoaquecida. Chumbo-ácido tolera carregar no frio, mas rende menos e dura poucos ciclos.</p></div>
+      <div class="block reveal"><h4>Inversor &amp; tensão</h4><h3>48 V ao expandir</h3><p>Onda senoidal pura é inegociável (o valvulado). Ficar em 24 V só no cenário frugal; ao adicionar cozinha/mini-split, migrar p/ <b>inversor híbrido 48 V, 5–6 kW</b> (menos corrente, cabos finos).</p></div>
+      <div class="block reveal"><h4>Montagem</h4><h3>Na rocha, ao Norte</h3><p>Estrutura no solo/rocha (a retro ajuda), <b>~38° virada ao Norte</b> — ângulo de inverno + a geada/neve escorrega. Fixação dimensionada ao vento. Não conte com geração em dia de neblina/neve.</p></div>
+    </div>
+    <div class="scroll"><table class="spec">
+      <thead><tr><th>Expansão faseada</th><th>Escopo</th><th>R$ · estimativa</th></tr></thead>
+      <tbody>
+        <tr><td><b>A — Frugal confiável</b></td><td>+2–3 painéis (~1,2–1,5 kWp); mantém 24 V</td><td class="num">&lt; 2.000 (+~8k se 1 módulo lítio)</td></tr>
+        <tr><td><b>B — + cozinha pontual</b></td><td>migrar 48 V: híbrido 5 kW + ~10 kWh LiFePO4 + painéis</td><td class="num">~25.000–30.000</td></tr>
+        <tr><td><b>C — cozinha cheia + mini-split</b></td><td>5–6 kWp + 15–20 kWh LiFePO4 + inversor 6 kW</td><td class="num">~35.000–50.000</td></tr>
+      </tbody>
+    </table></div>
+    <div class="two">
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Integração</h4>
+        <ul class="clean">
+          <li><b>PV → só eletricidade;</b> solar térmico → água/calor; lenha → ambiente. Separados.</li>
+          <li><b>Dump do excedente</b> de PV numa resistência do tanque de inércia = água quente de graça em dia claro.</li>
+          <li><b>Gerador inverter 2–3 kW</b> como seguro contra as sequências de neblina do planalto (recarrega o banco, não alimenta a casa direto).</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="mono" style="font-size:11px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase">Medir antes (custo zero)</h4>
+        <ul class="clean">
+          <li>Confirmar que o inversor é <b>senoidal pura</b>.</li>
+          <li>Puxar o <b>HSP exato</b> do sítio no CRESESB/SunData com o GPS.</li>
+          <li>Decidir a <b>cozinha primeiro</b> — é ela que define o tamanho de tudo.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><span class="lbl">Nota</span><p>Custos ESTIMATIVA (varejo 2025); kit fechado costuma sair melhor que peça a peça. HSP e o microclima de neblina (Morro da Igreja) a confirmar no local.</p></div>
+  </section>
+
   <section class="chapter" id="materiais">
-    <div class="ch-head"><div class="ch-num">08 — MATERIAIS</div>
+    <div class="ch-head"><div class="ch-num">09 — MATERIAIS</div>
       <h2>Materiais &amp; custo-benefício</h2>
       <p class="lede">O caro nesses sistemas é mão de obra + transporte — e você tem pedra, lenha, a retro e as próprias mãos. Faixas ESTIMATIVA, cotar localmente.</p>
     </div>
@@ -447,7 +506,7 @@
   </section>
 
   <section class="chapter" id="execucao">
-    <div class="ch-head"><div class="ch-num">09 — EXECUÇÃO</div>
+    <div class="ch-head"><div class="ch-num">10 — EXECUÇÃO</div>
       <h2>Execução — sequência de obra</h2>
       <p class="lede">A ordem no canteiro. A retro paga a si mesma em acesso, dreno, cisterna e contenção de pedra.</p>
     </div>
@@ -460,7 +519,7 @@
   </section>
 
   <section class="chapter" id="seguranca">
-    <div class="ch-head"><div class="ch-num">10 — SEGURANÇA</div>
+    <div class="ch-head"><div class="ch-num">11 — SEGURANÇA</div>
       <h2>Segurança — os inegociáveis</h2>
       <p class="lede">O que transforma "incrível" em "incrível e seguro". Cada item tem custo real de vida ou de obra.</p>
     </div>
